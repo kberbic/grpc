@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+import "google/protobuf/descriptor.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+
+package validation;
+
+extend google.protobuf.FieldOptions {
+  int32 required = 70000;
+  int32 lt = 70001;
+  int32 gt = 70002;
+  string map = 70004;
+  string regex = 70005;
+}
