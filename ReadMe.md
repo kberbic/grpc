@@ -8,6 +8,6 @@
 - proto3 with validation 
 - Request/Response validation
 
-Generate
+Generate first service
 
-    ./ms.sh -s test -p 8080
+    curl -LJ0 https://github.com/kberbic/grpc/archive/master.zip | tar -xf - --strip=1; chmod +x ms.sh; ./ms.sh -s test -p 8080

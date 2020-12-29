@@ -14,7 +14,7 @@ PORT=${p:-8000}
 GIT_COMMAND=$i
 AUTH=$a
 
-echo "GENERATE CONFIGURATION"
+echo "GENERATE CONFIGURATION FOR" ${SERVICE}Service
 mkdir -p $SERVICE
 
     if test -z "$GIT_COMMAND"
