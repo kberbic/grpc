@@ -60,9 +60,9 @@ export default class HttpServer{
             this.#app[route.type](route.path, (req, res, next) => {
                 const metadata = new grpc.Metadata();
                 Object.keys(req.headers)
-                    .filter(x=> x === "authorization").forEach(key => metadata.add(key, req.headers[key]));
+                    .filter(x=> ["connection", "content-length"].indexOf(x) === -1)
+                    .forEach(key => metadata.add(key, req.headers[key]));
 
-                console.log(metadata)
                 client[route.service][route.method](route.map.reduce((body, map) => {
                     for (let key in req[map])
                         body[key] = req[map][key];
