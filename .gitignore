@@ -10,5 +10,6 @@ examples/companies/node_modules
 .idea
 .DS_Store
 module.iml
+user.sh
 
 npm-debug.log*
