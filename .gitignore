@@ -2,11 +2,13 @@
 
 # dependencies
 /node_modules
+examples/auth/node_modules
+examples/users/node_modules
+examples/companies/node_modules
 
 # misc
 .idea
 .DS_Store
 module.iml
-/examples
 
 npm-debug.log*
