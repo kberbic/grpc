@@ -51,11 +51,11 @@ message Test {
 EOF
 
 cat <<EOF >$SERVICE/services/$SERVICE.service.js
-export default class ${SERVICE}Service{
-    static proto = "$SERVICE.proto";
+export default class ${SERVICE}Service {
+    static proto = '${SERVICE}.proto';
 
-    static async test(){
-        return {id: "test"};
+    static async test() {
+      return { id: 'test' };
     }
 }
 EOF
@@ -80,6 +80,7 @@ if test -z "$AUTH"
        cp -a .providers/${AUTH}.js $SERVICE/providers/.
 
       cat <<EOF >$SERVICE/index.js
+/* eslint-disable no-console */
 process.env.NODE_ENV = process.env.NODE_ENV || 'local';
 
 import path from 'path';
