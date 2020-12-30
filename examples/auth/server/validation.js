@@ -4,10 +4,16 @@ import protobufjs from 'protobufjs';
 const { types } = protobufjs;
 
 const MAPPERS = {
-  '(validation.required)': { name: 'required', type: Boolean },
-  '(validation.lt)': { name: 'lt', type: Number },
-  '(validation.gt)': { name: 'gt', type: Number },
+  '(validation.required)': { name: 'required' },
+  '(validation.min)': { name: 'min', type: Number },
+  '(validation.max)': { name: 'max', type: Number },
   '(validation.email)': { name: 'email' },
+  '(validation.pattern)': { name: 'pattern' },
+  '(validation.matches)': { name: 'matches' },
+  '(validation.url)': { name: 'url' },
+  '(validation.lowercase)': { name: 'lowercase' },
+  '(validation.uppercase)': { name: 'uppercase' },
+  '(validation.trim)': { name: 'trim' },
 };
 
 class Validation {
@@ -30,11 +36,7 @@ class Validation {
             return rules;
           }, {});
 
-        valid.properties[fieldKey] = {
-          type: typeof types.defaults[root[key].fields[fieldKey].type],
-        };
-        if (propRules.required) valid.required.push(fieldKey);
-
+        valid.properties[fieldKey] = this.#check(valid, propRules, root, key, fieldKey);
         return valid;
       }, {
         type: 'object',
@@ -43,11 +45,43 @@ class Validation {
         properties: {},
         required: [],
       });
+
       rule[key] = convertToYup.default(validationRules);
       return rule;
     }, {});
 
     return this.#rules;
+  }
+
+  #check (valid, propRules, root, key, fieldKey) {
+    const props = {
+      type: typeof types.defaults[root[key].fields[fieldKey].type],
+    };
+
+    if (propRules.required) {
+      props.required = true;
+      valid.required.push(fieldKey);
+    }
+
+    if (propRules.pattern) props.pattern = propRules.pattern;
+
+    if (propRules.email) props.format = 'email';
+
+    if (propRules.url) props.format = 'url';
+
+    if (propRules.matches) props.matches = propRules.matches;
+
+    if (propRules.lowercase) props.lowercase = true;
+
+    if (propRules.uppercase) props.uppercase = true;
+
+    if (propRules.trim) props.trim = true;
+
+    if (propRules.min) props[props.type === 'string' ? 'minLength' : 'min'] = propRules.min;
+
+    if (propRules.max) props[props.type === 'string' ? 'maxLength' : 'max'] = propRules.max;
+
+    return props;
   }
 }
 
