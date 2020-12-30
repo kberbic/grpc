@@ -10,7 +10,13 @@
     "lint:fix": "eslint --fix . --ext .js",
     "test": "node --experimental-vm-modules node_modules/.bin/jest --config ./jest.config.json",
     "test:watch": "npm run test -- --watch",
+    "commit": "npm run lint; npm run test",
     "patch:proto-loader": "cp -a patch/. node_modules/."
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run commit"
+    }
   },
   "keywords": [],
   "author": "",
@@ -38,6 +44,7 @@
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-babel": "^5.3.1",
     "eslint-plugin-import": "^2.22.1",
+    "husky": "^4.3.6",
     "jest": "^26.6.3"
   }
 }

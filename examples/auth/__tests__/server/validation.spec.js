@@ -1,3 +1,5 @@
+/* no-undef */
+
 import Validation from '../../server/validation.js';
 
 describe('Proto3 Validation', () => {
