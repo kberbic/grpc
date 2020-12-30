@@ -13,12 +13,6 @@
     "commit": "npm run lint; npm run test",
     "patch:proto-loader": "cp -a patch/. node_modules/."
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm commit",
-      "pre-push": "npm commit"
-    }
-  },
   "keywords": [],
   "author": "",
   "license": "ISC",
