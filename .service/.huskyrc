@@ -1,8 +1,6 @@
 {
-  "husky": {
     "hooks": {
-      "pre-commit": "npm run commit",
-      "pre-push": "npm run commit"
+      "pre-commit": "cd .service; npm run commit",
+      "pre-push": "cd .service; npm run commit"
     }
-  }
 }
