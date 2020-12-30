@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+import "google/protobuf/duration.proto";
+import "google/protobuf/empty.proto";
+import "google/api/annotations.proto";
+import "validation.proto";
+
+service AuthService {
+  rpc token (Login) returns (Token) {
+    option (google.api.http) = {
+      post:"/AuthService/token",
+      body: "*"
+    };
+  }
+  rpc getUser (google.protobuf.Empty) returns (Login) {
+    option (google.api.http) = {
+      get: "/AuthService/me"
+    };
+  }
+}
+
+message Login {
+  string username=1 [
+    (validation.email) = true,
+    (validation.matches) = "(kberbic@devlogic.eu|kenan.berbic@symphony.is)",
+    (validation.pattern) = '^[̌\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$',
+    (validation.required) = true,
+    (validation.lowercase) = true,
+    (validation.min) = 15
+  ];
+  string password=2 [
+    (validation.required) = true,
+    (validation.max) = 20
+  ];
+}
+
+message Token {
+  string schema=1;
+  int32 role=2 [(validation.required) = true, (validation.max) = 23];
+  string token=3 [(validation.required) = true, (validation.min) = 34];
+}

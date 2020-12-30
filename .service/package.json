@@ -7,7 +7,10 @@
   "scripts": {
     "start": "node index.js",
     "lint": "eslint . --ext .js",
-    "lint:fix": "eslint --fix . --ext .js"
+    "lint:fix": "eslint --fix . --ext .js",
+    "test": "node --experimental-vm-modules node_modules/.bin/jest --config ./jest.config.json",
+    "test:watch": "npm run test -- --watch",
+    "patch:proto-loader": "cp -a patch/. node_modules/."
   },
   "keywords": [],
   "author": "",
@@ -34,6 +37,7 @@
     "eslint": "^7.16.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-babel": "^5.3.1",
-    "eslint-plugin-import": "^2.22.1"
+    "eslint-plugin-import": "^2.22.1",
+    "jest": "^26.6.3"
   }
 }

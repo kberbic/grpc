@@ -2,7 +2,10 @@
 
 # dependencies
 /node_modules
+.service/node_modules
+.service/package-lock.json
 examples/auth/node_modules
+examples/auth/coverage
 examples/users/node_modules
 examples/companies/node_modules
 
