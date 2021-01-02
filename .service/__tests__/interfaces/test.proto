@@ -5,7 +5,7 @@ import "google/protobuf/empty.proto";
 import "google/api/annotations.proto";
 import "validation.proto";
 
-service AuthService {
+service TestService {
   rpc token (Login) returns (Token) {
     option (google.api.http) = {
       post:"/AuthService/token",
@@ -22,7 +22,6 @@ service AuthService {
 message Login {
   string username=1 [
     (validation.email) = true,
-    (validation.matches) = "(kberbic@devlogic.eu|kenan.berbic@symphony.is)",
     (validation.pattern) = '^[̌\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$',
     (validation.required) = true,
     (validation.lowercase) = true,

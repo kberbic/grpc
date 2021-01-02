@@ -20,10 +20,7 @@ class Validation {
   #rules = null;
 
   load(root) {
-    if (!root) 
-      
-      
-      return this.#rules;
+    if (!root) { return this.#rules; }
 
     this.#rules = Object.keys(root).reduce((rule, key) => {
       if (!root[key] || !root[key].fields) return rule;

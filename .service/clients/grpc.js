@@ -20,7 +20,7 @@ export default class Client {
 
     #init (services) {
       this.#services = services.reduce((input, item) => {
-        const protoPath = `${this.#interfaces}/${item.proto}`;
+        const protoPath = `${item.interfaces || this.#interfaces}/${item.proto}`;
         const { definition } = protoLoader.loadSync(protoPath, OPTIONS);
         const proto = grpc.loadPackageDefinition(definition);
 

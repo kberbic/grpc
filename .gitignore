@@ -15,5 +15,6 @@ examples/companies/node_modules
 module.iml
 user.sh
 package.json
+package-lock.json
 
 npm-debug.log*

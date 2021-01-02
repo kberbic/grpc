@@ -21,7 +21,7 @@ For now only supported:
 - trim
 
 ## TODO
-- Add tests and improve code coverage
+- Add tests and improve code coverage (missing: grpc, rest, auths)
 - Update documentation
 - Add more validation rules
 - Add more examples, and update documentation in examples

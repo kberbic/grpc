@@ -4,6 +4,8 @@ const MAPPERS = {
 
 class Routes {
   load(root, proto, address) {
+    if (!root) return [];
+
     return Object.keys(root).reduce((methods, serviceKey) => {
       if (!root[serviceKey] || !root[serviceKey].methods) return methods;
 
