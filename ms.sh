@@ -10,6 +10,7 @@ while [ $# -gt 0 ]; do
   shift
 done
 
+MODULE_PATH=${x:-.}
 INTERFACES='interfaces'
 SERVICE=${s:-"REQUIRED"}
 PORT=${p:-"REQUIRED"}
@@ -51,9 +52,11 @@ mkdir -p $SERVICE
        $($GIT_COMMAND $SERVICE/$INTERFACES)
     fi
 
-cd .service; tar -c --exclude __tests__ --exclude node_modules . | tar -x -C ../$SERVICE/.; cd ..
+#cd .service; tar -c --exclude __tests__ --exclude node_modules . | tar -x -C ../$SERVICE/.; cd ..
 
-#cp -a .service/. $SERVICE/.
+cp -a $MODULE_PATH/.service/. $SERVICE/.
+rm -rf ./node_modules
+rm -rf ./__tests__/*
 
 cat <<EOF >$SERVICE/$INTERFACES/$SERVICE.proto
 syntax = "proto3";
