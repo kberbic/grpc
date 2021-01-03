@@ -10,6 +10,11 @@
 #### Generate template for your first microservice
     grpc-ms -s test -p 8080
     
+#### Generate auth service
+    grpc-ms -s auth -p 8080 -a jwt
+    grpc-ms -s auth -p 8080 -a auth0
+    grpc-ms -s auth -p 8080 -a okta // in development
+    
 #### Start your service
     cd test
     npm start
