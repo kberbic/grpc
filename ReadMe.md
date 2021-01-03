@@ -5,10 +5,10 @@
 ### How to use
 
 #### Install
-    npm install msgrpc -g
+    npm i @kberbic/grpc-ms -g
 
-#### Generate your first microservice
-    msgrpc -s test -p 8080
+#### Generate template for your first microservice
+    grpc-ms -s test -p 8080
     
 #### Start your service
     cd test

@@ -1,3 +1,5 @@
+HELP=$1
+
 while [ $# -gt 0 ]; do
 
    if [[ $1 == *"-"* ]]; then
@@ -14,14 +16,13 @@ PORT=${p:-"REQUIRED"}
 GIT_COMMAND=$i
 AUTH=$a
 
-if [ -n "$h" ]; then
-  echo ""
-  else
+if [ $HELP == "-h" ]
+then
   echo ""
   echo "MSGRPC -> Generate ms with grpc and http support"
   echo ""
-  echo "    [-s]=Service name without 'Service' keyword"
-  echo "    [-p]=Service port number"
+  echo "    [-s]=Service name without 'Service' keyword - REQUIRED"
+  echo "    [-p]=Service port number - REQUIRED"
   echo "    [-i]=Service interfaces over git repository"
   echo "    [-a]=Add init auth on service, support: jwt, auth0, okta"
   echo ""
@@ -30,13 +31,13 @@ fi
 
 if [ $SERVICE == "REQUIRED" ]
   then
-    echo "Missing service name with args -s 'name'"
+    echo "Missing service name with args -s"
     exit 0
 fi
 
 if [ $PORT == "REQUIRED" ]
   then
-    echo "Missing service port with args -p 8080"
+    echo "Missing service port with args -p"
     exit 0
 fi
 
@@ -45,7 +46,7 @@ mkdir -p $SERVICE
 
     if test -z "$GIT_COMMAND"
     then
-      echo "INTERFACES DOES NOT EXIST ON GIT"
+      echo ""
     else
        $($GIT_COMMAND $SERVICE/$INTERFACES)
     fi
