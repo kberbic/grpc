@@ -1,0 +1,22 @@
+{
+  "name": "msgrpc",
+  "version": "0.0.1",
+  "description": "Microservice GRPC/Express NodeJS Template with auth(jwt, auth0, okta)",
+  "main": "./service/index.js",
+  "bin": {
+    "msgrpc": "./bin/index.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kberbic/grpc.git"
+  },
+  "author": "Kenan Berbic",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kberbic/grpc/issues"
+  },
+  "homepage": "https://github.com/kberbic/grpc#readme"
+}
