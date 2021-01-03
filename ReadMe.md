@@ -1,10 +1,27 @@
-#[Alpha 0.0.1]  Microservice GRPC/Express NodeJS Template with auth(jwt, auth0, okta) 
+#Microservice GRPC/Express NodeJS Template with auth support: jwt, auth0, okta) 
 
-## Support
-- GRPC
-- HTTP
-- proto3
-- request/response validation
+## !!! Still under development - [Alpha 0.0.1] !!!
+
+### How to use
+
+#### Install
+    npm install msgrpc -g
+
+#### Generate your first microservice
+    msgrpc -s test -p 8080
+    
+#### Start your service
+    cd test
+    npm start
+    
+#### Commands
+    [-s] - service name without 'Service' keyword
+    [-p] - service port number
+    [-i] - service interfaces over git repository
+    [-a] - add init auth on service, support: jwt, auth0, okta
+    [-h] - help
+
+## Documentation
 
 ### Validations
 https://github.com/ritchieanesco/json-schema-yup-transform, 
@@ -20,15 +37,17 @@ For now only supported:
 - uppercase, 
 - trim
 
+## Support
+- GRPC
+- HTTP
+- Proto3
+- Request/Response validations
+
+
 ## TODO
 - Add tests and improve code coverage (missing: grpc, rest, auths)
 - Update documentation
 - Add more validation rules
-- Add more examples, and update documentation in examples
+- Add more examples, and update documentation for examples
 - Add deployment example
-- Deploy like npm package
 - Add example with MongoDB, Postgres
-
-### Your first micro service
-
-    curl -LJ0 https://github.com/kberbic/grpc/archive/master.zip | tar -xf - --strip=1; chmod +x ms.sh; ./ms.sh -s test -p 8080

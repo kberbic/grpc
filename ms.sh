@@ -9,10 +9,36 @@ while [ $# -gt 0 ]; do
 done
 
 INTERFACES='interfaces'
-SERVICE=$s
-PORT=${p:-8000}
+SERVICE=${s:-"REQUIRED"}
+PORT=${p:-"REQUIRED"}
 GIT_COMMAND=$i
 AUTH=$a
+
+if [ -n "$h" ]; then
+  echo ""
+  else
+  echo ""
+  echo "MSGRPC -> Generate ms with grpc and http support"
+  echo ""
+  echo "    [-s]=Service name without 'Service' keyword"
+  echo "    [-p]=Service port number"
+  echo "    [-i]=Service interfaces over git repository"
+  echo "    [-a]=Add init auth on service, support: jwt, auth0, okta"
+  echo ""
+  exit 1
+fi
+
+if [ $SERVICE == "REQUIRED" ]
+  then
+    echo "Missing service name with args -s 'name'"
+    exit 0
+fi
+
+if [ $PORT == "REQUIRED" ]
+  then
+    echo "Missing service port with args -p 8080"
+    exit 0
+fi
 
 echo "GENERATE CONFIGURATION FOR" ${SERVICE}Service
 mkdir -p $SERVICE
@@ -24,7 +50,9 @@ mkdir -p $SERVICE
        $($GIT_COMMAND $SERVICE/$INTERFACES)
     fi
 
-cp -a .service/. $SERVICE/.
+cd .service; tar -c --exclude __tests__ --exclude node_modules . | tar -x -C ../$SERVICE/.; cd ..
+
+#cp -a .service/. $SERVICE/.
 
 cat <<EOF >$SERVICE/$INTERFACES/$SERVICE.proto
 syntax = "proto3";
@@ -93,7 +121,7 @@ const PUBLIC = [];
 async function start() {
     (await import('dotenv')).config({path: path.resolve("./.env." + process.env.NODE_ENV)});
 
-    const grcp = new GPRCServer({
+    const grpc = new GPRCServer({
         modules: [${AUTH}(PUBLIC)],
         port: process.env.PORT,
         host: '0.0.0.0',
@@ -105,8 +133,8 @@ async function start() {
         port: Number(process.env.PORT) + 1
     });
 
-    grcp.start()
-        .then(() => http.start(grcp.routes))
+    grpc.start()
+        .then(() => http.start(grpc.routes))
         .then(() => console.log("STARTED"))
         .catch(console.error);
 }
