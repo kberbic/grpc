@@ -1,0 +1,62 @@
+syntax = "proto3";
+
+import "google/protobuf/duration.proto";
+import "google/protobuf/empty.proto";
+import "google/api/annotations.proto";
+import "validation.proto";
+
+service companyService {
+  rpc create (CompanyCreate) returns (Create) {
+      option (google.api.http) = {
+      post: "/company",
+      body: "*"
+    };
+  }
+
+  rpc update (CompanyUpdate) returns (Create) {
+    option (google.api.http) = {
+      put: "/company",
+      body: "*"
+    };
+  }
+
+  rpc list (google.protobuf.Empty) returns (Create) {
+    option (google.api.http) = {
+      get: "/company"
+    };
+  }
+
+  rpc get (Create) returns (Create) {
+    option (google.api.http) = {
+      get: "/company/:id"
+    };
+  }
+
+  rpc delete (Delete) returns (Create) {
+    option (google.api.http) = {
+      delete: "/company/:id"
+    };
+  }
+}
+
+message Create {
+  string id = 1 [(validation.required)=true, (validation.max)=255];
+}
+
+message Delete {
+  string id = 1 [(validation.required)=true, (validation.max)=255];
+}
+
+message CompanyCreate {
+  string name = 1 [(validation.required)=true, (validation.max)=255];
+  string address = 2 [(validation.required)=true, (validation.max)=255];
+  int32 maxEmployee = 3 [(validation.required)=true, (validation.max)=10, (validation.min)=2];
+}
+
+message CompanyUpdate {
+  string id = 1 [(validation.required)=true, (validation.max)=255];
+  string name = 2 [(validation.required)=true, (validation.max)=255];
+  string address = 3 [(validation.required)=true, (validation.max)=255];
+  int32 maxEmployee = 4 [(validation.required)=true, (validation.max)=10, (validation.min)=2];
+}
+

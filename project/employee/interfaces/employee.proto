@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+import "google/protobuf/duration.proto";
+import "google/protobuf/empty.proto";
+import "google/api/annotations.proto";
+import "validation.proto";
+
+service employeeService {
+  rpc test (google.protobuf.Empty) returns (Test) {
+      option (google.api.http) = {
+      get: "/employee/me"
+    };
+  }
+}
+
+message Test {
+  string id = 1;
+}
+
