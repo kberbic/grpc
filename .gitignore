@@ -14,6 +14,7 @@ examples/companies/node_modules
 .DS_Store
 module.iml
 user.sh
+Test
 package-lock.json
 
 npm-debug.log*

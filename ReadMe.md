@@ -42,6 +42,42 @@ For now only supported:
 - uppercase, 
 - trim
 
+### Errors
+
+All implemented error classes are in "errors" folder and any new error implementation need to extend ServiceError [service.error.js]
+
+###### Example
+    
+    import ServiceError from './service.error.js';
+    
+    export default class MyCustomError extends ServiceError {
+        constructor(message) {
+            super(ServiceError.GRPC_CODES.NOT_FOUND, message);
+        }
+    }
+
+###### GRPC -> HTTP response mapping
+
+| GRPC | HTTP | GRPC Description    | Implemented errors    |
+|------|------|---------------------|-----------------------|
+| 0    | 200  | OK                  |                       |
+| 1    | 500  | CANCELLED           |                       |
+| 2    | 500  | UNKNOWN             |                       |
+| 3    | 400  | INVALID_ARGUMENT    | InvalidArgumentsError |
+| 4    | 500  | DEADLINE_EXCEEDED   |                       |
+| 5    | 204  | NOT_FOUND           | NotFoundError         |
+| 6    | 400  | ALREADY_EXISTS      |                       |
+| 7    | 403  | PERMISSION_DENIED   | UnauthorizedError     |
+| 8    | 429  | RESOURCE_EXHAUSTED  |                       |
+| 9    | 400  | FAILED_PRECONDITION |                       |
+| 10   | 500  | ABORTED             |                       |
+| 11   | 400  | OUT_OF_RANGE        |                       |
+| 12   | 404  | UNIMPLEMENTED       |                       |
+| 13   | 500  | INTERNAL            | InternalError         |
+| 14   | 404  | UNAVAILABLE         |                       |
+| 15   | 500  | DATA_LOSS           |                       |
+| 16   | 401  | UNAUTHENTICATED     | UnauthenticatedError  |
+
 ## Support
 - GRPC
 - HTTP

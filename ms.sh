@@ -55,8 +55,8 @@ mkdir -p $SERVICE
 #cd .service; tar -c --exclude __tests__ --exclude node_modules . | tar -x -C ../$SERVICE/.; cd ..
 
 cp -a $MODULE_PATH/.service/. $SERVICE/.
-rm -rf ./node_modules
-rm -rf ./__tests__/*
+rm -rf $SERVICE/node_modules
+rm -rf $SERVICE/__tests__/*
 
 cat <<EOF >$SERVICE/$INTERFACES/$SERVICE.proto
 syntax = "proto3";
