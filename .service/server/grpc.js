@@ -9,6 +9,7 @@ import Routes from './routes.js';
 const OPTIONS = {
   includeDirs: [
     `${path.resolve()}/node_modules/protobufjs`,
+    `${path.resolve()}/server`,
     `${path.resolve()}/interfaces`,
   ],
 };

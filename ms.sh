@@ -67,14 +67,12 @@ import "google/api/annotations.proto";
 import "validation.proto";
 
 service ${SERVICE}Service {
-  rpc test (Empty) returns (Test) {
+  rpc test (google.protobuf.Empty) returns (Test) {
       option (google.api.http) = {
       get: "/${SERVICE}/me"
     };
   }
 }
-
-message Empty {}
 
 message Test {
   string id = 1;

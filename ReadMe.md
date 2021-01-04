@@ -19,6 +19,10 @@
     cd test
     npm start
     
+#### Clients
+- BloomRPC (grpc) - can load proto file definition
+- Postman (http)
+    
 #### Commands
     [-s] - service name without 'Service' keyword
     [-p] - service port number
@@ -28,7 +32,25 @@
 
 ## Documentation
 
-### Validations
+### Project structure
+|            | Description                                                | Comment |
+|------------|------------------------------------------------------------|---------|
+| clients    | MS client implementation, it's only support grpc           |         |
+| errors     | Error classes implementation                               |         |
+| interfaces | All proto3 definition files                                |         |
+| models     | Database models                                            |         |
+| modules    | Modules or middlewares                                     |         |
+| patch      |                                                            |         |
+| server     | Server implementation                                      |         |
+| services   | Proto3 service implementation                              |         |
+
+#### Proto
+
+#### Service
+
+#### Middlewares
+
+#### Validations
 https://github.com/ritchieanesco/json-schema-yup-transform, 
 For now only supported: 
 - required, 
@@ -42,7 +64,7 @@ For now only supported:
 - uppercase, 
 - trim
 
-### Errors
+#### Errors
 
 All implemented error classes are in "errors" folder and any new error implementation need to extend ServiceError [service.error.js]
 
