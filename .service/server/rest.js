@@ -7,6 +7,7 @@ import express from 'express';
 import grpc from '@grpc/grpc-js';
 import Client from '../clients/grpc.js';
 import ServerError from '../errors/service.error.js';
+import logger from '../logger.js';
 
 export default class HttpServer {
     #port;
@@ -55,7 +56,7 @@ export default class HttpServer {
         this.#app.listen(this.#port, (err) => {
           if (err) return reject(err);
 
-          console.log(`Listening to requests on http://0.0.0.0:${this.#port}`);
+          logger.info(`Listening to requests on http://0.0.0.0:${this.#port}`);
           return resolve(this.#app);
         });
       });

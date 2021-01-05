@@ -5,6 +5,7 @@ import path from 'path';
 import fs from 'fs';
 import grpc from '@grpc/grpc-js';
 import protoLoader from '@grpc/proto-loader';
+import logger from '../logger.js';
 
 const OPTIONS = {
   keepCase: true,
@@ -40,7 +41,7 @@ export default class Client {
           data,
           { encoding: 'utf8' },
           (err) => (err ? reject(err) : resolve()))))
-          .catch(() => console.error(`ERROR: Download proto file from address ${url.url}`));
+          .catch(() => logger.error(`ERROR: Download proto file from address ${url.url}`));
 
         return { proto: `.${url.file}`, address: url.address };
       }));

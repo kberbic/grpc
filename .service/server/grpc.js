@@ -6,6 +6,7 @@ import protoLoader from '@grpc/proto-loader';
 import Validation from './validation.js';
 import Routes from './routes.js';
 import InvalidArgumentsError from '../errors/invalidarguments.error.js';
+import logger from '../logger.js';
 
 const OPTIONS = {
   includeDirs: [
@@ -91,7 +92,10 @@ export default class GPRCServer {
                 }));
               });
           })
-            .catch(callback);
+            .catch((err) => {
+              logger.error(err);
+              callback(err);
+            });
         };
 
         return service;
@@ -104,7 +108,7 @@ export default class GPRCServer {
 
         this.#server.start();
 
-        console.log(`Listening to requests on grpc://0.0.0.0:${port}`);
+        logger.info(`Listening to requests on grpc://0.0.0.0:${port}`);
         return resolve(this.#server);
       }));
     }

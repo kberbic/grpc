@@ -169,7 +169,8 @@ cat <<EOF >$SERVICE/package.json
     "jwks-rsa": "^1.12.0",
     "mongoose": "^5.11.10",
     "protobufjs": "^6.10.2",
-    "project-name": "^1.0.0"
+    "project-name": "^1.0.0",
+    "winston": "^3.3.3"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.12.1",
@@ -185,6 +186,18 @@ cat <<EOF >$SERVICE/package.json
     "jest": "^26.6.3"
   }
 }
+EOF
+
+# Setup Dockerfile
+cat <<EOF >$SERVICE/Dockerfile
+FROM node:15-alpine as build
+RUN apk add bash
+WORKDIR /src/app
+COPY package*.json ./
+COPY . .
+RUN npm install
+EXPOSE $PORT $((PORT+1))
+CMD ["npm","start"]
 EOF
 
 echo "INSTALL MODULES"
