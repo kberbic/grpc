@@ -1,6 +1,6 @@
 {
   "name": "@kberbic/grpc-ms",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Microservice GRPC/Express NodeJS Template with auth support: jwt, auth0, okta",
   "main": "./service/index.js",
   "bin": {
