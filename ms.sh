@@ -134,6 +134,26 @@ EOF
 echo "DATABASE_URI=mongodb://localhost:27017/${SERVICE}" >>$SERVICE/.env.local
 fi
 
+if [[ $DATABASE == "postgres" ]]
+  then
+    cp -a .database/${DATABASE}/index.js $SERVICE/models/.
+    cat <<EOF >$SERVICE/models/$SERVICE.model.js
+const ${SERVICE} = (sequelize, { DataTypes }) => sequelize.define('${SERVICE}', {
+  name: {
+    type: DataTypes.STRING,
+    unique: true,
+    allowNull: false,
+    validate: {
+      notEmpty: true,
+    },
+  },
+});
+
+export default ${SERVICE};
+EOF
+echo "DATABASE_URI=postgres://postgres:password@localhost:5432/${SERVICE}" >>$SERVICE/.env.local
+fi
+
 # Setup correct package json
 cat <<EOF >$SERVICE/package.json
 {
@@ -170,6 +190,9 @@ cat <<EOF >$SERVICE/package.json
     "mongoose": "^5.11.10",
     "protobufjs": "^6.10.2",
     "project-name": "^1.0.0",
+    "pg": "^8.5.1",
+    "pg-connection-string": "^2.4.0",
+    "sequelize": "^6.3.5",
     "winston": "^3.3.3"
   },
   "devDependencies": {

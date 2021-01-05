@@ -32,7 +32,10 @@
     "mongoose": "^5.11.10",
     "project-name": "^1.0.0",
     "protobufjs": "^6.10.2",
-    "winston": "^3.3.3"
+    "winston": "^3.3.3",
+    "pg": "^8.5.1",
+    "pg-connection-string": "^2.4.0",
+    "sequelize": "^6.3.5"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.12.1",
