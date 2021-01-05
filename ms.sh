@@ -51,6 +51,8 @@ cp -a $MODULE_PATH/.service/. $SERVICE/.
 rm -rf $SERVICE/node_modules
 rm -rf $SERVICE/__tests__/*
 
+
+# Initialize proto example with test call and test model
 cat <<EOF >$SERVICE/$INTERFACES/$SERVICE.proto
 syntax = "proto3";
 
@@ -73,6 +75,7 @@ message Test {
 
 EOF
 
+# Initialize service template with test function
 cat <<EOF >$SERVICE/services/$SERVICE.service.js
 export default class ${SERVICE}Service {
     static proto = '${SERVICE}.proto';
@@ -81,6 +84,19 @@ export default class ${SERVICE}Service {
       return { id: 'test' };
     }
 }
+EOF
+
+# Initialize test for checking if service is create i properly way, with static field 'proto'
+mkdir -p $SERVICE/__tests__/services
+cat <<EOF >$SERVICE/__tests__/services/$SERVICE.service.spec.js
+/* eslint-disable no-undef */
+import ${SERVICE}Service from '../../services/${SERVICE}.service.js';
+
+describe('${SERVICE}.service.js', () => {
+    it('If ${SERVICE}Service is initialized, static field "proto" exist in ${SERVICE}Service', () => {
+        expect(${SERVICE}Service).toHaveProperty("proto");
+    });
+});
 EOF
 
 cat <<EOF >$SERVICE/.env.local
@@ -116,8 +132,60 @@ const Model = mongoose.model('${SERVICE}', ${SERVICE}Schema);
 export default Model;
 EOF
 echo "DATABASE_URI=mongodb://localhost:27017/${SERVICE}" >>$SERVICE/.env.local
-
 fi
+
+# Setup correct package json
+cat <<EOF >$SERVICE/package.json
+{
+  "name": "${SERVICE}Service",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "lint": "eslint . --ext .js",
+    "lint:fix": "eslint --fix . --ext .js",
+    "test": "node --experimental-vm-modules node_modules/.bin/jest --config ./jest.config.json",
+    "test:watch": "npm run test -- --watch",
+    "commit": "npm run lint:fix; npm run test",
+    "patch:proto-loader": "cp -a patch/. node_modules/.",
+    "postinstall": "npm run patch:proto-loader; npm run lint:fix"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@grpc/grpc-js": "^1.2.2",
+    "@grpc/proto-loader": "0.5.5",
+    "axios": "^0.21.1",
+    "correlation-id": "^4.0.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-jwt": "^6.0.0",
+    "google-protobuf": "^3.14.0",
+    "json-schema-yup-transformer": "^1.5.8",
+    "jsonwebtoken": "^8.5.1",
+    "jwks-rsa": "^1.12.0",
+    "mongoose": "^5.11.10",
+    "protobufjs": "^6.10.2",
+    "project-name": "^1.0.0"
+  },
+  "devDependencies": {
+    "@babel/eslint-parser": "^7.12.1",
+    "@babel/plugin-proposal-class-properties": "^7.12.1",
+    "@babel/plugin-proposal-private-methods": "^7.12.1",
+    "@babel/plugin-syntax-top-level-await": "^7.12.1",
+    "babel-eslint": "^11.0.0-beta.2",
+    "eslint": "^7.16.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-babel": "^5.3.1",
+    "eslint-plugin-import": "^2.22.1",
+    "husky": "^4.3.6",
+    "jest": "^26.6.3"
+  }
+}
+EOF
 
 echo "INSTALL MODULES"
 cd $SERVICE

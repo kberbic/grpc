@@ -9,6 +9,7 @@ import HttpServer from './server/rest.js';
 import auth0 from './providers/auth0.js';
 import services from './services/index.js';
 import models from './models/index.js';
+import projectName from 'project-name';
 
 const PUBLIC = [];
 async function start() {
@@ -26,7 +27,7 @@ async function start() {
     models.init()
         .then(() => grpc.start())
         .then(() => http.start(grpc.routes))
-        .then(() => console.log('STARTED'))
+        .then(() => console.log(`${projectName()} STARTED`))
         .catch(console.error);
 }
 

@@ -10,7 +10,7 @@
     "lint:fix": "eslint --fix . --ext .js",
     "test": "node --experimental-vm-modules node_modules/.bin/jest --config ./jest.config.json",
     "test:watch": "npm run test -- --watch",
-    "commit": "npm run lint; npm run test",
+    "commit": "npm run lint:fix; npm run test",
     "patch:proto-loader": "cp -a patch/. node_modules/.",
     "postinstall": "npm run patch:proto-loader; npm run lint:fix"
   },
@@ -20,16 +20,17 @@
   "dependencies": {
     "@grpc/grpc-js": "^1.2.2",
     "@grpc/proto-loader": "0.5.5",
+    "axios": "^0.21.1",
     "correlation-id": "^4.0.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-jwt": "^6.0.0",
-    "axios": "^0.21.1",
-    "mongoose": "^5.11.10",
     "google-protobuf": "^3.14.0",
     "json-schema-yup-transformer": "^1.5.8",
     "jsonwebtoken": "^8.5.1",
     "jwks-rsa": "^1.12.0",
+    "mongoose": "^5.11.10",
+    "project-name": "^1.0.0",
     "protobufjs": "^6.10.2"
   },
   "devDependencies": {

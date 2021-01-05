@@ -7,7 +7,7 @@ import HttpServer from './server/rest.js';
 import services from './services/index.js';
 import correlation from './modules/correlation.js';
 import models from './models/index.js';
-
+import projectName from 'project-name';
 // Configuration
 const dotenv = await import('dotenv');
 process.env.NODE_ENV = process.env.NODE_ENV || 'local';
@@ -29,11 +29,11 @@ async function start() {
   });
 
   models
-      .init()
-      .then(() => grpc.start())
-      .then(() => http.start(grpc.routes))
-      .then(() => console.log('STARTED'))
-      .catch(console.error);
+    .init()
+    .then(() => grpc.start())
+    .then(() => http.start(grpc.routes))
+    .then(() => console.log(`${projectName()} STARTED`))
+    .catch(console.error);
 }
 
 start();

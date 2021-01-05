@@ -2,8 +2,6 @@ import fs from 'fs';
 import path from 'path';
 import mongoose from 'mongoose';
 
-mongoose.Promise = global.Promise;
-
 const PATH = `${path.resolve()}/models`;
 const loadModels = async () => fs.readdirSync(PATH)
     .reduce(async (promise, file) => promise.then(async (models) => {

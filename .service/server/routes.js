@@ -9,7 +9,7 @@ class Routes {
     const root = definition.nested || definition;
     return Object.keys(root).reduce((methods, serviceKey) => {
       if (!root[serviceKey] || !root[serviceKey].methods) return methods;
-      
+
       const innerMethods = Object.keys(root[serviceKey].methods).reduce((outMethods, fieldKey) => {
         const options = root[serviceKey].methods[fieldKey].parsedOptions;
         if (!options) return outMethods;

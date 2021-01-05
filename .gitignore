@@ -2,24 +2,12 @@
 
 # dependencies
 /node_modules
-.service/node_modules
-.service/package-lock.json
-examples/auth/node_modules
-examples/auth/coverage
-project/auth/node_modules
-project/company/node_modules
-project/employee/node_modules
-examples/users/node_modules
-examples/companies/node_modules
-
-*/*/interfaces/.*
+*/node_modules
 
 # misc
 .idea
 .DS_Store
 module.iml
-user.sh
-Test
 package-lock.json
 
 npm-debug.log*

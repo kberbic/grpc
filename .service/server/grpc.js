@@ -142,7 +142,7 @@ export default class GPRCServer {
       const name = inputType ? inputType.type.name : null;
       if (validations[name]) {
         return validations[name].validate(request, { abortEarly: false })
-            .catch((err)=> {throw new InvalidArgumentsError("INVALID_MODEL", err)});
+          .catch((err) => { throw new InvalidArgumentsError(err.errors.join(', '), err); });
       }
 
       return Promise.resolve();

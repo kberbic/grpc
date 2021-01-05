@@ -4,6 +4,7 @@ const { status } = grpc;
 
 export default class ServiceError extends Error {
     code = 2;
+
     metadata = new grpc.Metadata();
 
     static GRPC_CODES = status;
