@@ -20,6 +20,9 @@
 #### Start your service
     cd test
     npm start
+
+#### Create docker image
+    docker build --tag test .
     
 #### Clients
 - BloomRPC (grpc) - can load proto file definition
