@@ -1,6 +1,10 @@
 #Microservice GRPC/Express NodeJS Template with auth support: jwt, auth0, okta) 
 
-## !!! Still under development - [Alpha 0.0.1] !!!
+## <p style='color:red'>!!! Still under development !!!</p>
+
+## <p style='color:red'>Required NodeJS >= 14.14.0</p>
+
+## Open [examples (auth, company, employee, statistic)](https://github.com/kberbic/grpc.examples)
 
 ### How to use
 
