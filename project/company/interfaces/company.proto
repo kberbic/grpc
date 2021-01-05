@@ -13,7 +13,7 @@ service companyService {
     };
   }
 
-  rpc update (CompanyUpdate) returns (Create) {
+  rpc update (Company) returns (Create) {
     option (google.api.http) = {
       put: "/company",
       body: "*"
@@ -26,7 +26,7 @@ service companyService {
     };
   }
 
-  rpc get (Create) returns (Create) {
+  rpc get (Create) returns (Company) {
     option (google.api.http) = {
       get: "/company/:id"
     };
@@ -50,13 +50,13 @@ message Delete {
 message CompanyCreate {
   string name = 1 [(validation.required)=true, (validation.max)=255];
   string address = 2 [(validation.required)=true, (validation.max)=255];
-  int32 maxEmployee = 3 [(validation.required)=true, (validation.max)=10, (validation.min)=2];
+  int32 maxEmployees = 3 [(validation.required)=true, (validation.max)=10, (validation.min)=2];
 }
 
-message CompanyUpdate {
+message Company {
   string id = 1 [(validation.required)=true, (validation.max)=255];
   string name = 2 [(validation.required)=true, (validation.max)=255];
   string address = 3 [(validation.required)=true, (validation.max)=255];
-  int32 maxEmployee = 4 [(validation.required)=true, (validation.max)=10, (validation.min)=2];
+  int32 maxEmployees = 4 [(validation.required)=true, (validation.max)=10, (validation.min)=2];
 }
 

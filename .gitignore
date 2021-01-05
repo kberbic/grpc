@@ -12,6 +12,8 @@ project/employee/node_modules
 examples/users/node_modules
 examples/companies/node_modules
 
+*/*/interfaces/.*
+
 # misc
 .idea
 .DS_Store

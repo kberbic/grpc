@@ -14,7 +14,7 @@ MODULE_PATH=${x:-.}
 INTERFACES='interfaces'
 SERVICE=${s:-"REQUIRED"}
 PORT=${p:-"REQUIRED"}
-GIT_COMMAND=$i
+DATABASE=$d
 AUTH=$a
 
 if [ $HELP == "-h" ]
@@ -26,6 +26,7 @@ then
   echo "    [-p]=Service port number - REQUIRED"
   echo "    [-i]=Service interfaces over git repository"
   echo "    [-a]=Add init auth on service, support: jwt, auth0, okta"
+  echo "    [-d]=Add database configuration, support: mongodb, postgres"
   echo ""
   exit 1
 fi
@@ -44,15 +45,7 @@ fi
 
 echo "GENERATE CONFIGURATION FOR" ${SERVICE}Service
 mkdir -p $SERVICE
-
-    if test -z "$GIT_COMMAND"
-    then
-      echo ""
-    else
-       $($GIT_COMMAND $SERVICE/$INTERFACES)
-    fi
-
-#cd .service; tar -c --exclude __tests__ --exclude node_modules . | tar -x -C ../$SERVICE/.; cd ..
+mkdir -p $SERVICE/interfaces
 
 cp -a $MODULE_PATH/.service/. $SERVICE/.
 rm -rf $SERVICE/node_modules
@@ -92,55 +85,40 @@ EOF
 
 cat <<EOF >$SERVICE/.env.local
 PORT=$PORT
+
 EOF
-
-echo "INSTALL MODULES"
-cd $SERVICE
-npm install
-
-echo "PATCHING @grpc/proto-loader"
-cp -a patch/. node_modules/.
-cd ..
 
 if test -z "$AUTH"
     then
       echo ""
     else
        mkdir -p $SERVICE/providers
-       cp -a .providers/${AUTH}.js $SERVICE/providers/.
-
-      cat <<EOF >$SERVICE/index.js
-/* eslint-disable no-console */
-process.env.NODE_ENV = process.env.NODE_ENV || 'local';
-
-import path from 'path';
-import GPRCServer from "./server/grpc.js";
-import HttpServer from "./server/rest.js";
-import ${AUTH} from './providers/${AUTH}.js';
-import services from './services/index.js';
-
-const PUBLIC = [];
-async function start() {
-    (await import('dotenv')).config({path: path.resolve("./.env." + process.env.NODE_ENV)});
-
-    const grpc = new GPRCServer({
-        modules: [${AUTH}(PUBLIC)],
-        port: process.env.PORT,
-        host: '0.0.0.0',
-        services: services
-    });
-
-    const http = new HttpServer({
-        modules: [],
-        port: Number(process.env.PORT) + 1
-    });
-
-    grpc.start()
-        .then(() => http.start(grpc.routes))
-        .then(() => console.log("STARTED"))
-        .catch(console.error);
-}
-
-start();
-EOF
+       cp -a .providers/${AUTH}/${AUTH}.js $SERVICE/providers/.
+       cp -a .providers/index.${AUTH}.js $SERVICE/index.js
 fi
+
+if [[ $DATABASE == "mongodb" ]]
+  then
+    cp -a .database/${DATABASE}/index.js $SERVICE/models/.
+    cat <<EOF >$SERVICE/models/$SERVICE.model.js
+import mongoose from 'mongoose';
+
+const ${SERVICE}Schema = new mongoose.Schema(
+    {
+        name: String
+    }, {
+        timestamps: true,
+        collection: "tests"
+    }
+);
+
+const Model = mongoose.model('${SERVICE}', ${SERVICE}Schema);
+export default Model;
+EOF
+echo "DATABASE_URI=mongodb://localhost:27017/${SERVICE}" >>$SERVICE/.env.local
+
+fi
+
+echo "INSTALL MODULES"
+cd $SERVICE
+npm install

@@ -26,7 +26,7 @@ export default class HttpServer {
 
     defaults() {
       this.#app.use(express.urlencoded({ extended: false }));
-
+      this.#app.use(express.static('interfaces'));
       this.#app.use(express.json({
         inflate: true,
         limit: '100kb',

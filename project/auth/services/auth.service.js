@@ -6,7 +6,7 @@ import {generateToken} from '../providers/jwt.js';
 export default class authService {
     static proto = 'auth.proto';
 
-    static async create(company) {
+    static async register(user) {
       const exist = await db.User.findOne({email: user.email}, "_id").lean();
       if(exist)
           throw new InvalidArgumentsError("USER_ALREADY_EXIST");

@@ -11,7 +11,8 @@
     "test": "node --experimental-vm-modules node_modules/.bin/jest --config ./jest.config.json",
     "test:watch": "npm run test -- --watch",
     "commit": "npm run lint; npm run test",
-    "patch:proto-loader": "cp -a patch/. node_modules/."
+    "patch:proto-loader": "cp -a patch/. node_modules/.",
+    "postinstall": "npm run patch:proto-loader"
   },
   "keywords": [],
   "author": "",

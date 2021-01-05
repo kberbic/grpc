@@ -11,7 +11,8 @@
     "test": "node --experimental-vm-modules node_modules/.bin/jest --config ./jest.config.json",
     "test:watch": "npm run test -- --watch",
     "commit": "npm run lint; npm run test",
-    "patch:proto-loader": "cp -a patch/. node_modules/."
+    "patch:proto-loader": "cp -a patch/. node_modules/.",
+    "postinstall": "npm run patch:proto-loader"
   },
   "keywords": [],
   "author": "",
@@ -19,6 +20,7 @@
   "dependencies": {
     "@grpc/grpc-js": "^1.2.2",
     "@grpc/proto-loader": "0.5.5",
+    "axios": "^0.21.1",
     "correlation-id": "^4.0.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",

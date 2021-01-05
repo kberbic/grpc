@@ -9,6 +9,8 @@
 
 #### Generate template for your first microservice
     grpc-ms -s test -p 8080
+    grpc-ms -s test -p 8080 -d monogodb // with mongodb support
+    grpc-ms -s test -p 8080 -d postgres // with postgresql support [in development]
     
 #### Generate auth service
     grpc-ms -s auth -p 8080 -a jwt
@@ -28,6 +30,7 @@
     [-p] - service port number
     [-i] - service interfaces over git repository
     [-a] - add init auth on service, support: jwt, auth0, okta
+    [-d] - add database configuration, support: mongodb, postgres
     [-h] - help
 
 ## Documentation

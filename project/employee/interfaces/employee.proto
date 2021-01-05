@@ -6,14 +6,21 @@ import "google/api/annotations.proto";
 import "validation.proto";
 
 service employeeService {
-  rpc test (google.protobuf.Empty) returns (Test) {
+  rpc create (CreateEmployee) returns (Create) {
       option (google.api.http) = {
-      get: "/employee/me"
+      post: "/employee",
+      body: "*"
     };
   }
 }
 
-message Test {
+message Create {
   string id = 1;
+}
+
+message CreateEmployee {
+  string name = 1 [(validation.required)=true, (validation.max)=255];
+  string address = 2 [(validation.required)=true, (validation.max)=255];
+  string companyId = 3 [(validation.required)=true, (validation.max)=255];
 }
 

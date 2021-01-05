@@ -18,8 +18,6 @@ const loadModels = async () => fs.readdirSync(PATH)
 const models = await loadModels();
 models.lib = mongoose;
 models.connect = mongoose.connect;
-models.init = async ()=> mongoose.connect(
-    process.env.DATABASE_URI,
-    {useNewUrlParser: true, useUnifiedTopology: true});
+models.init = async ()=> mongoose.connect(process.env.DATABASE_URI, {useNewUrlParser: true, useUnifiedTopology: true});
 
 export default models;

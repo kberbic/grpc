@@ -1,13 +1,20 @@
 /* eslint-disable no-console */
-const dotenv = await import('dotenv');
-process.env.NODE_ENV = process.env.NODE_ENV || 'local';
-dotenv.config({ path: path.resolve(`./.env.${process.env.NODE_ENV}`) });
 
 import path from 'path';
+import GRPCClient from './clients/grpc.js';
 import GRPCServer from './server/grpc.js';
 import HttpServer from './server/rest.js';
 import services from './services/index.js';
 import correlation from './modules/correlation.js';
+import models from './models/index.js';
+
+// Configuration
+const dotenv = await import('dotenv');
+process.env.NODE_ENV = process.env.NODE_ENV || 'local';
+dotenv.config({ path: path.resolve(`./.env.${process.env.NODE_ENV}`) });
+
+// Setup GRPC client
+process.client = await new GRPCClient().load();
 
 async function start() {
   const grpc = new GRPCServer({
@@ -21,10 +28,12 @@ async function start() {
     port: Number(process.env.PORT) + 1,
   });
 
-  grpc.start()
-    .then(() => http.start(grpc.routes))
-    .then(() => console.log('STARTED'))
-    .catch(console.error);
+  models
+      .init()
+      .then(() => grpc.start())
+      .then(() => http.start(grpc.routes))
+      .then(() => console.log('STARTED'))
+      .catch(console.error);
 }
 
 start();
