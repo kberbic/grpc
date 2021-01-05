@@ -108,7 +108,7 @@ const ${SERVICE}Schema = new mongoose.Schema(
         name: String
     }, {
         timestamps: true,
-        collection: "tests"
+        collection: "${SERVICE}"
     }
 );
 
