@@ -18,7 +18,7 @@ Support GRPC, HTTP, Jwt, Auth0, MongoDB, PostgreSQL, Docker
 
 #### Generate template for your first microservice
 
-> grpc-ms -s [service name] -p 8080
+> grpc-ms -s [service name] -p [port]
 
     grpc-ms -s mymicro -p 8080
     grpc-ms -s mymicro -p 8080 -d monogodb // with mongodb support
