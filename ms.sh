@@ -141,11 +141,7 @@ if [[ $DATABASE == "postgres" ]]
 const ${SERVICE} = (sequelize, { DataTypes }) => sequelize.define('${SERVICE}', {
   name: {
     type: DataTypes.STRING,
-    unique: true,
-    allowNull: false,
-    validate: {
-      notEmpty: true,
-    },
+    allowNull: false
   },
 });
 

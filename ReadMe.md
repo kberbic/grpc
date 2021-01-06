@@ -1,12 +1,12 @@
 #Microservice GRPC/Express NodeJS Template with auth support: jwt, auth0, okta) 
 
-## <p style='color:red'>!!! Still under development !!!</p>
+### <p style='color:red'>!!! Still under development !!!</p>
 
-## <p style='color:red'>Required NodeJS >= 14.14.0</p>
+### <p style='color:red'>Required NodeJS >= 14.14.0</p>
 
-## Open [examples (auth, company, employee, statistic)](https://github.com/kberbic/grpc.examples)
+## See [examples (auth, company, employee, statistic)](https://github.com/kberbic/grpc.examples)
 
-### How to use
+## How to use
 
 #### Install
     npm i @kberbic/grpc-ms -g
@@ -31,7 +31,7 @@
 #### Clients
 - BloomRPC (grpc) - can load proto file definition
 - Postman (http)
-    
+
 #### Commands
     [-s] - service name without 'Service' keyword
     [-p] - service port number
@@ -48,6 +48,7 @@
 | clients    | MS client implementation, it's only support grpc           |         |
 | errors     | Error classes implementation                               |         |
 | interfaces | All proto3 definition files                                |         |
+| __tests__  | Tests implementation                                       |         |
 | models     | Database models                                            |         |
 | modules    | Modules or middlewares                                     |         |
 | patch      |                                                            |         |
@@ -56,23 +57,145 @@
 
 #### Proto
 
+Proto example can be found in interfaces folder
+```
+syntax = "proto3";
+
+import "google/protobuf/duration.proto";
+import "google/protobuf/empty.proto";
+import "google/api/annotations.proto";
+import "validation.proto";
+
+service employeeService {
+  rpc create (Employee) returns (Create) {
+      option (google.api.http) = {
+      post: "/employee",
+      body: "*"
+    };
+  }
+
+  rpc list (EmployeeQuery) returns (EmployeeList) {
+    option (google.api.http) = {
+      get: "/employee/:companyId"
+    };
+  }
+}
+
+message Create {
+  string id = 1;
+}
+
+message EmployeeQuery {
+  string companyId = 1;
+}
+
+message EmployeeList {
+  repeated Employee employees = 1 [(validation.required)=true];
+}
+
+message Employee {
+  string id=1;
+  string name = 2 [(validation.required)=true, (validation.max)=255];
+  string address = 3 [(validation.required)=true, (validation.max)=255];
+  string companyId = 4 [(validation.required)=true, (validation.max)=255];
+}
+
+```
+
 #### Service
+
+Service example can be found in service folder
+
+```
+import db from '../models/index.js';
+
+export default class employeeService {
+    static proto = 'employee.proto';
+
+    static async create(employee) {
+      const { companyService } = process.client;
+
+      const company = await companyService.get({ id: employee.companyId }, this.metadata);
+      const output = await (new db.Employee({ userId: this.user.id, ...employee, company })).save();
+
+      return { id: output._id };
+    }
+
+    static async list({ companyId }) {
+      const { companyService } = process.client;
+
+      const company = await companyService.get({ id: companyId }, this.metadata);
+      const employees = await db.Employee.find({ userId: this.user.id, companyId: company._id });
+
+      return { employees };
+    }
+}
+
+```
 
 #### Middlewares
 
-#### Validations
-https://github.com/ritchieanesco/json-schema-yup-transform, 
+This is implemented in similar way like Express implement on their side
+
+```
+process.client = await new GRPCClient().load();
+const { authService } = process.client;
+const auth = (req, next) => authService
+  .profile(req.metadata)
+// eslint-disable-next-line no-return-assign
+  .then((user) => { req.user = user; next(); })
+  .catch(next);
+
+async function start() {
+  const grpc = new GRPCServer({
+    modules: [correlation, auth], // middlewares
+    port: process.env.PORT,
+    host: '0.0.0.0',
+    services,
+  });
+
+  const http = new HttpServer({
+    port: Number(process.env.PORT) + 1,
+  });
+
+  models
+    .init()
+    .then(() => grpc.start())
+    .then(() => http.start(grpc.routes))
+    .then(() => console.log('STARTED'))
+    .catch(console.error);
+}
+
+```
+
+#### Validations with proto
+
 For now only supported: 
-- required, 
-- min (string, number), 
-- max (string, number), 
-- pattern, 
-- email, 
-- matches, 
-- url, 
-- lowercase, 
-- uppercase, 
-- trim
+- validation.required, 
+- validation.min (string, number), 
+- validation.max (string, number), 
+- validation.pattern, 
+- validation.email, 
+- validation.matches, 
+- validation.url, 
+- validation.lowercase, 
+- validation.uppercase, 
+- validation.trim
+
+How to use in proto:
+
+```
+message EmployeeList {
+  repeated Employee employees = 1 [(validation.required)=true];
+}
+
+message Employee {
+  string id=1;
+  string name = 2 [(validation.required)=true, (validation.max)=255];
+  string address = 3 [(validation.required)=true, (validation.max)=255];
+  string companyId = 4 [(validation.required)=true, (validation.max)=255];
+}
+```
 
 #### Errors
 
@@ -121,6 +244,5 @@ All implemented error classes are in "errors" folder and any new error implement
 - Add tests and improve code coverage (missing: grpc, rest, auths)
 - Update documentation
 - Add more validation rules
-- Add more examples, and update documentation for examples
+- Update documentation for examples
 - Add deployment example
-- Add example with MongoDB, Postgres
