@@ -12,9 +12,12 @@
     npm i @kberbic/grpc-ms -g
 
 #### Generate template for your first microservice
-    grpc-ms -s test -p 8080
-    grpc-ms -s test -p 8080 -d monogodb // with mongodb support
-    grpc-ms -s test -p 8080 -d postgres // with postgresql support
+
+> grpc-ms -s [service name] -p 8080
+
+    grpc-ms -s mymicro -p 8080
+    grpc-ms -s mymicro -p 8080 -d monogodb // with mongodb support
+    grpc-ms -s mymicro -p 8080 -d postgres // with postgresql support
     
 #### Generate auth service
     grpc-ms -s auth -p 8080 -a jwt
@@ -245,4 +248,5 @@ All implemented error classes are in "errors" folder and any new error implement
 - Update documentation
 - Add more validation rules
 - Update documentation for examples
-- Add deployment example
+- Add terraform support
+- Upgrade support
