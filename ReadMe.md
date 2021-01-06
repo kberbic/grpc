@@ -1,6 +1,11 @@
-#Microservice GRPC/Express NodeJS Template with auth support: jwt, auth0, okta) 
+#Microservice GRPC/HTTP NodeJS code generator with auth and database support 
 
-### <p style='color:red'>!!! Still under development !!!</p>
+### <p style='color:red'>!!! Under development !!!</p>
+
+
+>Simple, fast, and scalable code generator for quickly create an microservice application skeleton. 
+Support GRPC, HTTP, Jwt, Auth0, MongoDB, PostgreSQL, Docker
+
 
 ### <p style='color:red'>Required NodeJS >= 14.14.0</p>
 

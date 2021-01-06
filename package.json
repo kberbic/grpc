@@ -1,7 +1,7 @@
 {
   "name": "@kberbic/grpc-ms",
-  "version": "0.0.13",
-  "description": "Microservice GRPC/Express NodeJS Template with auth support: jwt, auth0, okta",
+  "version": "0.0.14",
+  "description": "Simple, fast, and scalable code generator for quickly create an microservice application skeleton. Support GRPC, HTTP, Jwt, Auth0, MongoDB, PostgreSQL, Docker",
   "main": "./service/index.js",
   "bin": {
     "grpc-ms": "./bin/index.js"
@@ -18,5 +18,17 @@
   "bugs": {
     "url": "https://github.com/kberbic/grpc/issues"
   },
-  "homepage": "https://github.com/kberbic/grpc#readme"
+  "homepage": "https://github.com/kberbic/grpc#readme",
+  "keywords": [
+    "grpc",
+    "http",
+    "code generator",
+    "microservice",
+    "jwt",
+    "docker",
+    "terraform",
+    "auht0",
+    "mongodb",
+    "postgres"
+  ]
 }
