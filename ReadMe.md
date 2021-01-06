@@ -30,8 +30,8 @@ Support GRPC, HTTP, Jwt, Auth0, MongoDB, PostgreSQL, Docker
     grpc-ms -s auth -p 8080 -a okta // in development
     
 #### Start your service
-    cd test
-    npm start
+    cd mymicro
+    npm mymicro
 
 #### Create docker image
     docker build --tag test .
