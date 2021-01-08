@@ -1,11 +1,15 @@
 #Microservice GRPC/HTTP NodeJS code generator with auth and database support 
 
-### <p style='color:red'>!!! Under development !!!</p>
-
-
->Simple, fast, and scalable code generator for quickly create an microservice application skeleton. 
-Support GRPC, HTTP, Jwt, Auth0, MongoDB, PostgreSQL, Docker
-
+>Simple, fast, and scalable code generator for quickly create an microservice application skeleton.
+>
+>Features:
+>- GRPC and HTTP protocols
+>- Add support for express and custom middlewares
+>- Add proto3 validations
+>- JWT and Auth0 authorization
+>- MongoDB and Postgres databases
+>- Same project structure for all microservices
+>- Run you microservices like monolithic application
 
 ### <p style='color:red'>Required NodeJS >= 14.14.0</p>
 
@@ -43,7 +47,6 @@ Support GRPC, HTTP, Jwt, Auth0, MongoDB, PostgreSQL, Docker
 #### Commands
     [-s] - service name without 'Service' keyword
     [-p] - service port number
-    [-i] - service interfaces over git repository
     [-a] - add init auth on service, support: jwt, auth0, okta
     [-d] - add database configuration, support: mongodb, postgres
     [-h] - help
@@ -56,11 +59,6 @@ In that file, add configuration for all microservices, example
     PORT=8086
     JWT_SECRET=232342342345345345
     MONGO_DATABASE_URI=mongodb://localhost:27017/microservices
-    POSTGRES_DATABASE_URI=postgres://postgres:password@localhost:5432/statistic
-    MICROSERVICES=auth company employee statistic
-
-- MICROSERVICES = [microservice] [microservice] etc.... 
-  List of microservices that will be run in monolithic application
   
 #### Run monolithic application (in same process on same port)
 
