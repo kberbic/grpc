@@ -107,8 +107,8 @@ EOF
 if [[ $AUTH == "auth0" ]]
   then
     mkdir -p $SERVICE/providers
-    cp -a .providers/${AUTH}/${AUTH}.js $SERVICE/providers/.
-    cp -a .providers/index.${AUTH}.js $SERVICE/index.js
+    cp -a $MODULE_PATH/.providers/${AUTH}/${AUTH}.js $SERVICE/providers/.
+    cp -a $MODULE_PATH/.providers/index.${AUTH}.js $SERVICE/index.js
     echo "AUTH0_DOMAIN=" >>$SERVICE/.env.local
     echo "AUTH0_AUDIENCE=" >>$SERVICE/.env.local
 fi
@@ -116,14 +116,14 @@ fi
 if [[ $AUTH == "jwt" ]]
   then
     mkdir -p $SERVICE/providers
-    cp -a .providers/${AUTH}/${AUTH}.js $SERVICE/providers/.
-    cp -a .providers/index.${AUTH}.js $SERVICE/index.js
+    cp -a $MODULE_PATH/.providers/${AUTH}/${AUTH}.js $SERVICE/providers/.
+    cp -a $MODULE_PATH/.providers/index.${AUTH}.js $SERVICE/index.js
     echo "JWT_SECRET=00000000" >>$SERVICE/.env.local
 fi
 
 if [[ $DATABASE == "mongodb" ]]
   then
-    cp -a .database/${DATABASE}/index.js $SERVICE/models/.
+    cp -a $MODULE_PATH/.database/${DATABASE}/index.js $SERVICE/models/.
     cat <<EOF >$SERVICE/models/$SERVICE.model.js
 import mongoose from 'mongoose';
 
@@ -144,7 +144,7 @@ fi
 
 if [[ $DATABASE == "postgres" ]]
   then
-    cp -a .database/${DATABASE}/index.js $SERVICE/models/.
+    cp -a $MODULE_PATH/.database/${DATABASE}/index.js $SERVICE/models/.
     cat <<EOF >$SERVICE/models/$SERVICE.model.js
 const ${SERVICE} = (sequelize, { DataTypes }) => sequelize.define('${SERVICE}', {
   name: {
