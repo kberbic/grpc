@@ -11,11 +11,9 @@
 >- Same project structure for all microservices
 >- Run you microservices like monolithic application
 
-### <p style='color:red'>Required NodeJS >= 14.14.0</p>
-
 ## See [examples (auth, company, employee, statistic)](https://github.com/kberbic/grpc.examples)
 
-## How to use
+## How to use (NodeJS >= 14.14.0)
 
 #### Install
     npm i @kberbic/grpc-ms -g
