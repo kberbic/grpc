@@ -61,7 +61,7 @@ In that file, add configuration for all microservices, example
 #### Run monolithic application (in same process on same port)
 
     cd mymicro
-    nano start -- mono
+    npm start -- mono
 
 ## Documentation
 
