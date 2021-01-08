@@ -1,6 +1,6 @@
 import ServiceError from './service.error.js';
 
-export default class InvalidArgumentsError extends ServiceError {
+export default class ArgumentsError extends ServiceError {
   constructor(message, fields) {
     super(ServiceError.GRPC_CODES.INVALID_ARGUMENT, message);
     if (fields) {

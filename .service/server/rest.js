@@ -5,9 +5,9 @@
 
 import express from 'express';
 import grpc from '@grpc/grpc-js';
-import Client from '../clients/grpc.js';
-import ServerError from '../errors/service.error.js';
-import logger from '../logger.js';
+import Client from './client.js';
+import ServerError from './service.error.js';
+import logger from './logger.js';
 
 export default class HttpServer {
     #port;

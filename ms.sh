@@ -131,7 +131,7 @@ const ${SERVICE}Schema = new mongoose.Schema(
 const Model = mongoose.model('${SERVICE}', ${SERVICE}Schema);
 export default Model;
 EOF
-echo "DATABASE_URI=mongodb://localhost:27017/${SERVICE}" >>$SERVICE/.env.local
+echo "MONGO_DATABASE_URI=mongodb://localhost:27017/${SERVICE}" >>$SERVICE/.env.local
 fi
 
 if [[ $DATABASE == "postgres" ]]
@@ -147,7 +147,7 @@ const ${SERVICE} = (sequelize, { DataTypes }) => sequelize.define('${SERVICE}', 
 
 export default ${SERVICE};
 EOF
-echo "DATABASE_URI=postgres://postgres:password@localhost:5432/${SERVICE}" >>$SERVICE/.env.local
+echo "POSGRES_DATABASE_URI=postgres://postgres:password@localhost:5432/${SERVICE}" >>$SERVICE/.env.local
 fi
 
 # Setup correct package json

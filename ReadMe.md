@@ -48,6 +48,25 @@ Support GRPC, HTTP, Jwt, Auth0, MongoDB, PostgreSQL, Docker
     [-d] - add database configuration, support: mongodb, postgres
     [-h] - help
 
+## How to run all your microservices like monolithic application in same process (for debuging)
+
+Open one microservice and add new configuration file named '.env.mono'.
+In that file, add configuration for all microservices, example
+
+    PORT=8086
+    JWT_SECRET=232342342345345345
+    MONGO_DATABASE_URI=mongodb://localhost:27017/microservices
+    POSTGRES_DATABASE_URI=postgres://postgres:password@localhost:5432/statistic
+    MICROSERVICES=auth company employee statistic
+
+- MICROSERVICES = [microservice] [microservice] etc.... 
+  List of microservices that will be run in monolithic application
+  
+#### Run monolithic application (in same process on same port)
+
+    cd mymicro
+    nano start -- mono
+
 ## Documentation
 
 ### Project structure
@@ -56,7 +75,7 @@ Support GRPC, HTTP, Jwt, Auth0, MongoDB, PostgreSQL, Docker
 | clients    | MS client implementation, it's only support grpc           |         |
 | errors     | Error classes implementation                               |         |
 | interfaces | All proto3 definition files                                |         |
-| __tests__  | Tests implementation                                       |         |
+| __ tests__ | Tests implementation                                       |         |
 | models     | Database models                                            |         |
 | modules    | Modules or middlewares                                     |         |
 | patch      |                                                            |         |

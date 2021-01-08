@@ -1,7 +1,9 @@
 import fs from 'fs';
 import path from 'path';
+import utils from '../server/utils.js';
 
-const PATH = `${path.resolve()}/models`;
+const PATH = utils.path(import.meta);
+
 const loadModels = async () => fs.readdirSync(PATH)
   .reduce(async (promise, file) => promise.then(async (models) => {
     const fullPath = path.join(PATH, file);

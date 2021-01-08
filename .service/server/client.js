@@ -5,7 +5,7 @@ import path from 'path';
 import fs from 'fs';
 import grpc from '@grpc/grpc-js';
 import protoLoader from '@grpc/proto-loader';
-import logger from '../logger.js';
+import logger from './logger.js';
 
 const OPTIONS = {
   keepCase: true,
@@ -62,7 +62,7 @@ export default class Client {
 
     #init (services) {
       this.#services = services.reduce((input, item) => {
-        const protoPath = `${item.interfaces || this.#interfaces}/${item.proto}`;
+        const protoPath = path.isAbsolute(item.proto) ? item.proto : (`${item.interfaces || this.#interfaces}/${item.proto}`);
         const { definition } = protoLoader.loadSync(protoPath, OPTIONS);
         const proto = grpc.loadPackageDefinition(definition);
 

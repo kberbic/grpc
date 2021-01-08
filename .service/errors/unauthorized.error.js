@@ -1,4 +1,4 @@
-import ServiceError from './service.error.js';
+import ServiceError from '../server/service.error.js';
 
 export default class UnauthorizedError extends ServiceError {
   constructor(message) {

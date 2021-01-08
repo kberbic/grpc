@@ -5,8 +5,8 @@ import path from 'path';
 import protoLoader from '@grpc/proto-loader';
 import Validation from './validation.js';
 import Routes from './routes.js';
-import InvalidArgumentsError from '../errors/invalidarguments.error.js';
-import logger from '../logger.js';
+import ArgumentsError from './arguments.error.js';
+import logger from './logger.js';
 
 const OPTIONS = {
   includeDirs: [
@@ -16,6 +16,7 @@ const OPTIONS = {
   ],
 };
 
+const PATH = import.meta.url.replace('server/grpc.js', '').replace('file://', '');
 export default class GPRCServer {
     routes = [];
 
@@ -41,31 +42,36 @@ export default class GPRCServer {
       modules: [],
       services: {},
       interfaces: '',
+      server: null,
     }) {
       this.#port = options.port;
       this.#host = options.host;
       this.#services = options.services;
-      this.#interfaces = path.resolve() + (options.interfaces || '/interfaces');
+      this.#interfaces = options.interfaces || (`${PATH}/interfaces`);
       this.#modules = options.modules || [];
-      this.#server = new grpc.Server();
+      this.#server = options.server || new grpc.Server();
     }
 
-    async start() {
+    attach() {
       this.#services.forEach((service) => {
         const protoPath = `${this.#interfaces}/${service.proto}`;
         const { root, definition } = protoLoader.loadSync(protoPath, OPTIONS);
 
         this.#proto = grpc.loadPackageDefinition(definition);
         this.#validations = Validation.load(root);
-        this.routes = Routes.load(root, service.proto, `${this.#host}:${this.#port}`);
+        this.routes = Routes.load(root, protoPath, `${this.#host}:${this.#port}`);
 
-        const services = Object.getOwnPropertyNames(service)
+        const services = Object
+          .getOwnPropertyNames(service)
           .filter((key) => ['length', 'name', 'prototype', 'proto'].indexOf(key) === -1)
           .reduce(this.#exec(service), {});
 
         this.#server.addService(this.#proto[service.name].service, services);
       });
+    }
 
+    async start() {
+      this.attach();
       return this.#run();
     }
 
@@ -146,7 +152,7 @@ export default class GPRCServer {
       const name = inputType ? inputType.type.name : null;
       if (validations[name]) {
         return validations[name].validate(request, { abortEarly: false })
-          .catch((err) => { throw new InvalidArgumentsError(err.errors.join(', '), err); });
+          .catch((err) => { throw new ArgumentsError(err.errors.join(', '), err); });
       }
 
       return Promise.resolve();
