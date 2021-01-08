@@ -1,11 +1,11 @@
-#Microservice GRPC/HTTP NodeJS code generator with auth and database support 
+#Microservice GRPC/HTTP NodeJS code generator with auth database and monolithic runner support 
 
 >Simple, fast, and scalable code generator for quickly create an microservice application skeleton.
 >
 >Features:
 >- GRPC and HTTP protocols
->- Add support for express and custom middlewares
->- Add proto3 validations
+>- Support express and custom middlewares
+>- Proto3 validations (request, response validations)
 >- JWT and Auth0 authorization
 >- MongoDB and Postgres databases
 >- Same project structure for all microservices
@@ -22,7 +22,7 @@
 
 #### Generate template for your first microservice
 
-> grpc-ms -s [service name] -p [port]
+> grpc-ms -s [service name] -p [port] -d [mongodb | postgres]
 
     grpc-ms -s mymicro -p 8080
     grpc-ms -s mymicro -p 8080 -d monogodb // with mongodb support
@@ -258,17 +258,11 @@ All implemented error classes are in "errors" folder and any new error implement
 | 15   | 500  | DATA_LOSS           |                       |
 | 16   | 401  | UNAUTHENTICATED     | UnauthenticatedError  |
 
-## Support
-- GRPC
-- HTTP
-- Proto3
-- Request/Response validations
-
-
 ## TODO
-- Add tests and improve code coverage (missing: grpc, rest, auths)
-- Update documentation
-- Add more validation rules
-- Update documentation for examples
-- Add terraform support
-- Upgrade support
+>- Add tests and improve code coverage (missing: grpc, rest, auths)
+>- Update documentation
+>- More validation rules
+>- Update documentation for examples
+>- Terraform for deployments
+>- Intellij plugin
+>- Upgrade support

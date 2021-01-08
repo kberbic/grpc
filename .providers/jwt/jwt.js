@@ -2,6 +2,9 @@ import webtoken from 'jsonwebtoken';
 import UnauthorizedError from '../errors/unauthorized.error.js';
 
 export default function jwt(publics = []) {
+  if(!process.env.JWT_SECRET)
+      throw new Error("Please provide configuration field 'JWT_SECRET'");
+
   return (req, next) => {
     if (req.call
             && req.call.handler

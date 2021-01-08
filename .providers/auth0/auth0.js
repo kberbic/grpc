@@ -2,16 +2,22 @@ import jwksRsa from 'jwks-rsa';
 import jwtExpress from 'express-jwt';
 import UnauthorizedError from '../errors/unauthorized.error.js';
 
-export default function Auth0(domain, audience, publics = []) {
+export default function Auth0(publics = []) {
+  if(!process.env.AUTH0_DOMAIN)
+    throw new Error("Please provide configuration field 'AUTH0_DOMAIN'");
+
+  if(!process.env.AUTH0_AUDIENCE)
+    throw new Error("Please provide configuration field 'AUTH0_AUDIENCE'");
+
   const options = {
     secret: jwksRsa.expressJwtSecret({
       cache: true,
       rateLimit: true,
       jwksRequestsPerMinute: 5,
-      jwksUri: `https://${domain}/.well-known/jwks.json`,
+      jwksUri: `https://${process.env.AUTH0_DOMAIN}/.well-known/jwks.json`,
     }),
-    audience,
-    issuer: `https://${domain}/`,
+    audience: process.env.AUTH0_AUDIENCE,
+    issuer: `https://${process.env.AUTH0_DOMAIN}/`,
     algorithms: ['RS256'],
     getToken: (req) => {
       if (!req.metadata

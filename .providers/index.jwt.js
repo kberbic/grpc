@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 
+import fs from 'fs';
 import path from 'path';
 import grpcjs from '@grpc/grpc-js';
 import projectName from 'project-name';
@@ -60,15 +61,17 @@ class Server {
         const [mono] = process.argv.slice(2);
         if (mono !== 'mono') return [];
 
-        if (!process.env.SERVICES) return [];
-
         const currentPath = import.meta.url;
-        const paths = process.env.SERVICES.split(' ')
-            .filter((x) => !currentPath.endsWith(`/${x}/index.js`));
+
+        logger.info('Start service discovering');
+        const paths = this.#getDirectories('../')
+            .filter((x) => fs.existsSync(`../${x}/index.js`)
+                && !currentPath.endsWith(`/${x}/index.js`));
 
         let routes = [];
         const servers = await Promise.all(paths.map(async (x) => import(`../${x}/index.js`)));
 
+        const founds = [];
         // eslint-disable-next-line no-plusplus
         for (let i = 0; i < servers.length; i++) {
             const ChildServer = servers[i].default;
@@ -79,9 +82,19 @@ class Server {
                 // eslint-disable-next-line no-await-in-loop
                 await models.init();
                 routes = routes.concat(grpc.routes);
+                founds.push(paths[i]);
             }
         }
+
+        logger.info(`Finish service discovering, found: ${founds.join(' ')}`);
+
         return routes;
+    }
+
+    #getDirectories (source) {
+        return fs.readdirSync(source, { withFileTypes: true })
+            .filter((d) => d.isDirectory())
+            .map((d) => d.name);
     }
 }
 

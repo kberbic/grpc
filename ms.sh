@@ -104,13 +104,21 @@ PORT=$PORT
 
 EOF
 
-if test -z "$AUTH"
-    then
-      echo ""
-    else
-       mkdir -p $SERVICE/providers
-       cp -a .providers/${AUTH}/${AUTH}.js $SERVICE/providers/.
-       cp -a .providers/index.${AUTH}.js $SERVICE/index.js
+if [[ $AUTH == "auth0" ]]
+  then
+    mkdir -p $SERVICE/providers
+    cp -a .providers/${AUTH}/${AUTH}.js $SERVICE/providers/.
+    cp -a .providers/index.${AUTH}.js $SERVICE/index.js
+    echo "AUTH0_DOMAIN=" >>$SERVICE/.env.local
+    echo "AUTH0_AUDIENCE=" >>$SERVICE/.env.local
+fi
+
+if [[ $AUTH == "jwt" ]]
+  then
+    mkdir -p $SERVICE/providers
+    cp -a .providers/${AUTH}/${AUTH}.js $SERVICE/providers/.
+    cp -a .providers/index.${AUTH}.js $SERVICE/index.js
+    echo "JWT_SECRET=00000000" >>$SERVICE/.env.local
 fi
 
 if [[ $DATABASE == "mongodb" ]]
@@ -147,7 +155,7 @@ const ${SERVICE} = (sequelize, { DataTypes }) => sequelize.define('${SERVICE}', 
 
 export default ${SERVICE};
 EOF
-echo "POSGRES_DATABASE_URI=postgres://postgres:password@localhost:5432/${SERVICE}" >>$SERVICE/.env.local
+echo "POSTGRES_DATABASE_URI=postgres://postgres:password@localhost:5432/${SERVICE}" >>$SERVICE/.env.local
 fi
 
 # Setup correct package json
