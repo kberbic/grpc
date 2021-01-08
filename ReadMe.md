@@ -48,7 +48,7 @@ Support GRPC, HTTP, Jwt, Auth0, MongoDB, PostgreSQL, Docker
     [-d] - add database configuration, support: mongodb, postgres
     [-h] - help
 
-## How to run all your microservices like monolithic application in same process (for debuging)
+## How to run all your microservices like monolithic application in same process (for easy development and debugging)
 
 Open one microservice and add new configuration file named '.env.mono'.
 In that file, add configuration for all microservices, example
