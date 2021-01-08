@@ -167,6 +167,7 @@ cat <<EOF >$SERVICE/package.json
   "main": "index.js",
   "type": "module",
   "scripts": {
+    "start:live": "nodemon index.js",
     "start": "node index.js",
     "lint": "eslint . --ext .js",
     "lint:fix": "eslint --fix . --ext .js",
@@ -192,12 +193,12 @@ cat <<EOF >$SERVICE/package.json
     "jsonwebtoken": "^8.5.1",
     "jwks-rsa": "^1.12.0",
     "mongoose": "^5.11.10",
-    "protobufjs": "^6.10.2",
     "project-name": "^1.0.0",
+    "protobufjs": "^6.10.2",
+    "winston": "^3.3.3",
     "pg": "^8.5.1",
     "pg-connection-string": "^2.4.0",
-    "sequelize": "^6.3.5",
-    "winston": "^3.3.3"
+    "sequelize": "^6.3.5"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.12.1",
@@ -210,7 +211,8 @@ cat <<EOF >$SERVICE/package.json
     "eslint-plugin-babel": "^5.3.1",
     "eslint-plugin-import": "^2.22.1",
     "husky": "^4.3.6",
-    "jest": "^26.6.3"
+    "jest": "^26.6.3",
+    "nodemon": "^2.0.7"
   }
 }
 EOF

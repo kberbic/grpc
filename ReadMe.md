@@ -33,7 +33,7 @@
     
 #### Start your service
     cd mymicro 
-    npm start
+    npm start or npm run start:live
 
 #### Create docker image
     docker build --tag test .
