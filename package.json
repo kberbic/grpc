@@ -1,6 +1,6 @@
 {
   "name": "@kberbic/grpc-ms",
-  "version": "0.0.18.1",
+  "version": "0.0.19",
   "description": "Simple, fast, and scalable code generator for quickly create an microservice application skeleton. Support GRPC, HTTP, Jwt, Auth0, MongoDB, PostgreSQL, Docker",
   "main": "./service/index.js",
   "bin": {
@@ -12,6 +12,9 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/kberbic/grpc.git"
+  },
+  "publishConfig": {
+    "registry":"https://npm.pkg.github.com"
   },
   "author": "Kenan Berbic",
   "license": "ISC",
