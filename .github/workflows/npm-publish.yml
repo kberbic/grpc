@@ -44,6 +44,7 @@ jobs:
         with:
           node-version: 15
           registry-url: https://npm.pkg.github.com/
+          scope: '@kberbic'
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.git}}
