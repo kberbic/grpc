@@ -13,9 +13,6 @@
     "type": "git",
     "url": "git+https://github.com/kberbic/grpc.git"
   },
-  "publishConfig": {
-    "registry":"https://npm.pkg.github.com"
-  },
   "author": "Kenan Berbic",
   "license": "ISC",
   "bugs": {
