@@ -22,24 +22,8 @@ jobs:
           cd .service
           npm test
 
-  publish-gpr:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
-        with:
-          node-version: 15
-          registry-url: https://npm.pkg.github.com/kberbic/
-          scope: '@kberbic'
-      - run: |
-          npm config set scope "@kberbic"
-          npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.git}}
-
   publish-npm:
-    needs: publish-gpr
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -50,3 +34,18 @@ jobs:
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm}}
+
+  publish-gpr:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 15
+          registry-url: https://npm.pkg.github.com
+          scope: '@kberbic'
+      - run: echo "registry=https://npm.pkg.github.com/@kberbic" >> .npmrc
+      - run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.git}}
