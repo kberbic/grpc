@@ -8,6 +8,5 @@
 .idea
 .DS_Store
 module.iml
-package-lock.json
 
 npm-debug.log*
