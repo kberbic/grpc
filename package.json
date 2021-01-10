@@ -1,6 +1,6 @@
 {
   "name": "@kberbic/grpc-ms",
-  "version": "0.0.20",
+  "version": "0.0.21",
   "description": "Simple, fast, and scalable code generator for quickly create an microservice application skeleton. Support GRPC, HTTP, Jwt, Auth0, MongoDB, PostgreSQL, Docker",
   "main": "./service/index.js",
   "bin": {
