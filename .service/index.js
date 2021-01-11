@@ -28,7 +28,7 @@ class Server {
 
   async start() {
     this.#grpc = new GRPCServer({
-      modules: [].concat(modules),
+      modules: [].concat(modules()),
       port: process.env.PORT,
       host: '0.0.0.0',
       server: this.#server,
