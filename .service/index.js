@@ -10,7 +10,7 @@ import GRPCClient from './server/client.js';
 import GRPCServer from './server/grpc.js';
 import HttpServer from './server/rest.js';
 import services from './services/index.js';
-import correlation from './modules/correlation.js';
+import modules from './modules/index.js';
 import models from './models/index.js';
 import logger from './server/logger.js';
 
@@ -28,7 +28,7 @@ class Server {
 
   async start() {
     this.#grpc = new GRPCServer({
-      modules: [correlation],
+      modules: [].concat(modules()),
       port: process.env.PORT,
       host: '0.0.0.0',
       server: this.#server,
@@ -43,14 +43,14 @@ class Server {
     });
 
     models.init()
-      .then(() => this.#grpc.start())
-      .then(async () => {
-        routes = this.#grpc.routes.concat(routes);
-        process.client = await (new GRPCClient(routes)).load();
-        return this.#http.start(routes, process.client);
-      })
-      .then(() => logger.info(`${projectName()} started`))
-      .catch(logger.error);
+        .then(() => this.#grpc.start())
+        .then(async () => {
+          routes = this.#grpc.routes.concat(routes);
+          process.client = await (new GRPCClient(routes)).load();
+          return this.#http.start(routes, process.client);
+        })
+        .then(() => logger.info(`${projectName()} started`))
+        .catch(logger.error);
 
     return { grpc: this.#grpc, models };
   }
@@ -63,7 +63,7 @@ class Server {
 
     logger.info('Start service discovering');
     const paths = this.#getDirectories('../')
-      .filter((x) => fs.existsSync(`../${x}/index.js`)
+        .filter((x) => fs.existsSync(`../${x}/index.js`)
             && !currentPath.endsWith(`/${x}/index.js`));
 
     let routes = [];
@@ -91,8 +91,8 @@ class Server {
 
   #getDirectories (source) {
     return fs.readdirSync(source, { withFileTypes: true })
-      .filter((d) => d.isDirectory())
-      .map((d) => d.name);
+        .filter((d) => d.isDirectory())
+        .map((d) => d.name);
   }
 }
 

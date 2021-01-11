@@ -5,9 +5,11 @@ import fs from 'fs';
 import path from 'path';
 import Sequelize from 'sequelize';
 import ConnectionString from 'pg-connection-string';
+import projectName from 'project-name';
 import utils from '../server/utils.js';
 
 const PATH = utils.path(import.meta);
+const PROJECT_PATH = projectName(PATH.replace('/models', ''));
 const loadModels = async () => fs.readdirSync(PATH)
     .reduce(async (promise, file) => promise.then(async (models) => {
         const fullPath = path.join(PATH, file);
@@ -20,7 +22,9 @@ const loadModels = async () => fs.readdirSync(PATH)
 const models = await loadModels();
 
 models.init = async () => {
-    const config = ConnectionString.parse(process.env.POSTGRES_DATABASE_URI);
+    const config = ConnectionString.parse(
+        process.env[`${projectName(PROJECT_PATH).toUpperCase()}_DATABASE_URI`]
+        || process.env.DATABASE_URI);
     const sequelize = new Sequelize(
         config.database,
         config.user,
