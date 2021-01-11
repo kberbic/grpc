@@ -6,6 +6,7 @@ import projectName from 'project-name';
 import utils from '../server/utils.js';
 
 const PATH = utils.path(import.meta);
+const PROJECT_PATH = projectName(PATH.replace('/models', ''));
 const loadModels = async () => fs.readdirSync(PATH)
     .reduce(async (promise, file) => promise.then(async (models) => {
         const fullPath = path.join(PATH, file);
@@ -19,8 +20,9 @@ const loadModels = async () => fs.readdirSync(PATH)
 const models = await loadModels();
 models.lib = mongoose;
 models.connect = mongoose.connect;
-models.init = async ()=> mongoose.connect(
-    process.env[`${projectName().toUpperCase()}_DATABASE_URI`] || process.env.DATABASE_URI,
-    {useNewUrlParser: true, useUnifiedTopology: true});
+models.init = async () => mongoose.connect(
+    process.env[`${projectName(PROJECT_PATH).toUpperCase()}_DATABASE_URI`] || process.env.DATABASE_URI,
+    { useNewUrlParser: true, useUnifiedTopology: true },
+);
 
 export default models;
