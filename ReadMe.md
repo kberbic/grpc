@@ -65,12 +65,13 @@ Example
 - BloomRPC (grpc) - can load proto file definition
 - Postman (http)
 
-#### Commands
-    [-s] - service name without 'Service' keyword
-    [-p] - service port number
-    [-a] - add init auth on service, support: jwt, auth0, okta
-    [-d] - add database configuration, support: mongodb, postgres
-    [-h] - help
+#### Options:
+    -V, --version           output the version number
+    -s, --service  <name>   service name without 'Service' keyword
+    -p, --port <number>     service port number - REQUIRED
+    -d, --database  <type>  add database configuration, support: mongodb, postgres
+    -a, --auth  <type>      add init auth on service, support: jwt, auth0, okta
+    -h, --help              display help for command
 
 ## How to run all your microservices like monolithic application in same process (for easy development and debugging)
 
