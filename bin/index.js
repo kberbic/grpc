@@ -100,11 +100,11 @@ JWT_SECRET=00000000
         let modelPath = `${program.service}/models/${program.service}.model.js`;
         if (program.database === 'mongodb') {
             ENV_TEMPLATE += `
-MONGO_DATABASE_URI=mongodb://localhost:27017/${program.service}
+DATABASE_URI=mongodb://localhost:27017/${program.service}
     `;
         } else if (program.database === 'postgres') {
             ENV_TEMPLATE += `
-POSTGRES_DATABASE_URI=postgres://postgres:password@localhost:5432/${program.service}
+DATABASE_URI=postgres://postgres:password@localhost:5432/${program.service}
     `;
         } else {
             console.log("Wrong database parameter, only support: mongodb and postgres");

@@ -16,7 +16,13 @@
 
 ## How to use (NodeJS >= 14.14.0)
 
-#### Install
+### NPX
+
+> npx grpc-ms -s [service name] -p [port] -d [mongodb | postgres]
+
+### NPM
+
+#### Install 
     npm i @kberbic/grpc-ms -g
 
 #### Generate a template for your first microservice

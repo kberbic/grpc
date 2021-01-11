@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import mongoose from 'mongoose';
+import projectName from 'project-name';
 
 import utils from '../server/utils.js';
 
@@ -19,7 +20,7 @@ const models = await loadModels();
 models.lib = mongoose;
 models.connect = mongoose.connect;
 models.init = async ()=> mongoose.connect(
-    process.env.MONGO_DATABASE_URI,
+    process.env[`${projectName().toUpperCase()}_DATABASE_URI`] || process.env.DATABASE_URI,
     {useNewUrlParser: true, useUnifiedTopology: true});
 
 export default models;
