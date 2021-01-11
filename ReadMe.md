@@ -348,7 +348,6 @@ export default class employeeService {
 >- Update documentation
 >- More validation rules
 >- Custom validation message support
->- Auto include modules from modules folder
 >- Update documentation for examples
 >- Terraform for deployments
 >- Intellij plugin
