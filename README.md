@@ -1,16 +1,16 @@
 #Microservice GRPC/HTTP NodeJS code generator with auth, database and monolithic runner support 
 
->Simple, fast, and scalable code generator for quickly create an microservice application skeleton.
+>Simple, fast, and scalable code generator to quickly create a microservice application skeleton.
 >
 >Features:
 >- GRPC and HTTP protocols
->- Support express and custom middlewares
->- Proto3 validations (request, response validations)
+>- Express and custom middlewares support
+>- Proto3 validations (request and response validations)
 >- JWT and Auth0 authorization
->- MongoDB and Postgres databases
+>- MongoDB and Postgres databases support
 >- Default docker configuration
 >- Same project structure for all microservices
->- Run you microservices like monolithic application
+>- Run your microservices like a monolithic application
 
 ## See [examples (auth, company, employee, statistic)](https://github.com/kberbic/grpc.examples)
 
@@ -38,7 +38,7 @@
 
 #### Share proto files between microservices and create connections
 
-To call action from other microservices, add address of that microservice in configuration file
+To call the action from other microservices, add the address of that microservice in the configuration file
 
 > [service name]_SERVICE=[host address]:[port]/[proto name].proto
 
@@ -72,16 +72,16 @@ Example
     [-d] - add database configuration, support: mongodb, postgres
     [-h] - help
 
-## How to run all your microservices like monolithic application in same process (for easy development and debugging)
+## How to run all your microservices like monolithic application in the same process (for easy development and debugging)
 
-Open one microservice and add new configuration file named '.env.mono'.
-In that file, add configuration for all microservices, example
+Open one microservice and add a new configuration file named '.env.mono'.
+In that file, add configuration for all microservices, for example
 
     PORT=8086
     JWT_SECRET=232342342345345345
     MONGO_DATABASE_URI=mongodb://localhost:27017/microservices
   
-#### Run monolithic application (in same process on same port)
+#### Run the monolithic application (in the same process on the same port)
 
     cd mymicro
     npm start -- mono
@@ -90,7 +90,7 @@ In that file, add configuration for all microservices, example
 
 ### How it works
 
-After you select your configuration, generator will generator skeleton for your microservice project. Project contains minimal setup to start with development, and its contains next structure:
+After you select your configuration, a generator will generate a skeleton for your microservice project. The project contains minimal setup to start with development, and it contains the next structure:
 - __ tests___
 - errors
 - interfaces
@@ -103,7 +103,7 @@ After you select your configuration, generator will generator skeleton for your 
 
 #### __ tests___
 
-Great place for tests, uniq with correct folders structure. Jest is test engines for all tests in project. Extension for all tests is ‘’.spec.js’. This mean that jest will try to run all files that ends with extensions ‘.spec.js’.
+Great place for tests with a unique names and correct folder structure. Jest is the test engine for all tests in a project. The extension for all tests is ‘’.spec.js’. This means that jest will try to run all files that end with extensions ‘.spec.js’.
 
 Run tests
 
@@ -115,15 +115,14 @@ Run tests in watch mode
 
 #### errors
 
-Contains errors implemnation. By default generator will generate next files:
+Contains errors implementation. By default generator will generate next files:
 - internal.error.js - Server Error, REST (500)
 - notfound.error.js - Not Found, REST (204)
 - invalidarguments.error.js - Bad Request, REST (400)
 - unauthenticated.error.js - Unauthenticated, REST (401)
 - unauthorized.error.js - Unauthorized - , REST (403)
 
-To define new error, it’s enough to create file ‘your error name’.error.js in error folder and extend ServiceError imported from ‘./service.error.js’, like in next example:
-
+To define a new error, it’s enough to create file ‘your error name’.error.js in error folder and extend ServiceError imported from ‘./service.error.js’, like in the next example:
 ```
 import ServiceError from '../server/service.error.js';
 
@@ -158,8 +157,7 @@ export default class ExampleError extends ServiceError {
 
 #### interfaces
 
-In this folder generator will create init proto file. That proto file contains example how to defined model and actions for your service, auth example.
-
+In this folder, a generator will create an init proto file. That proto file contains an example of how to defined models and actions for your service, auth example.
 ```
 syntax = "proto3";
 
@@ -232,8 +230,7 @@ message Employee {
 
 ### models
 
-All database models need’s to be defined in this folder. Main file ‘index.js’ have discovery model implementation and action for connection on db. Generator for now only support two database MongoDB and PostgreSQL. New support can bi implemented in same way like these two database. Main action in this file is ‘init’ function that contains logic for database connection
-
+All database models need to be defined in this folder. Main file ‘index.js’ has discovery model implementation and action for connection on db. Currently, the generator supports two databases only, MongoDB and PostgreSQL. New support can be implemented in the same way as these two databases. The main action in this file is the ‘init’ function that contains logic for database connection
 ```
 import fs from 'fs';
 import path from 'path';
@@ -265,8 +262,7 @@ export default models;
 
 #### modules (Middleware’s)
 
-By default, this folder will contains Correlation (npm correlation-id) middleware. Middleware implementation is similar like for Express, main different is that GRPC does not have response arguments in functions. Example of JWT middleware:
-
+By default, this folder will contain Correlation (npm correlation-id) middleware. Middleware implementation is similar to Express. The main difference is that GRPC does not have response arguments in functions. Example of JWT middleware:
 ```
 export default function jwt(publics = []) {
   if(!process.env.JWT_SECRET)
@@ -300,8 +296,7 @@ export default function jwt(publics = []) {
 
 #### patch
 
-Will apply and fix issue with loading proto files for ‘@grpc/proto-loader’. This issue is related for loading proto field options, that is required to support proto validations
-
+Will apply and fix the issue with loading proto files for ‘@grpc/proto-loader’. This issue is related to loading proto field options, that is required to support proto validations.
 #### server (Magic)
 
 - https://grpc.github.io/grpc/node/grpc.html
@@ -344,12 +339,12 @@ export default class employeeService {
 
 
 ## TODO
->- Add tests and improve code coverage (missing: grpc, rest, auths)
+>- Add tests and improve code coverage (missing: grpc, rest, auth)
 >- Update documentation
 >- More validation rules
 >- Custom validation message support
 >- Auto include modules from modules folder
->- Update documentation for examples
+>- Update examples
 >- Terraform for deployments
 >- Intellij plugin
 >- Upgrade support
