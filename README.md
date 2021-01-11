@@ -86,7 +86,9 @@ In that file, add configuration for all microservices, for example
 
     PORT=8086
     JWT_SECRET=232342342345345345
-    MONGO_DATABASE_URI=mongodb://localhost:27017/microservices
+    DATABASE_URI=mongodb://localhost:27017/microservices - to use one db for all microservices
+    AUTHSERVICE_DATABASE_URI=mongodb://localhost:27017/auth - to use this db for auth service
+    COMPANYSERVICE_DATABASE_URI=postgres://postgres:password@localhost:5432/company - similar if you have other database
   
 #### Run the monolithic application (in the same process on the same port)
 
