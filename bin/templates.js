@@ -1,4 +1,4 @@
-import {exec} from "child_process";
+const { exec } = require('child_process');
 
 const capitalize = (s) => {
     if (typeof s !== 'string') return ''
@@ -16,11 +16,7 @@ function execAsync(command){
     });
 }
 
-export {
-    capitalize,
-    execAsync
-}
-export default function (program) {
+function parse (program) {
 
     const PROTO_TEMPLATE = `
 syntax = "proto3";
@@ -115,4 +111,10 @@ CMD ["npm","start"]
         ENVIRONMENT_TEMPLATE,
         DOCKER_TEMPLATE
     }
+}
+
+module.exports = {
+    capitalize,
+    execAsync,
+    parse
 }
